@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .bg-focus {
+        background-color: #edf2f7;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 p-8">
+    <!-- Header Section Start -->
+    <div class="flex justify-between items-center bg-white p-4 shadow-md">
+      <h1 class="text-xl font-bold">Exam Portal</h1>
+      <a
+        href="/logout"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Logout
+      </a>
+    </div>
+    <!-- Header Section End -->
+    <form
+      id="updationform"
+      action="/dashboard"
+      method="post"
+      class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-8"
+    >
+      <div class="mb-4">
+        <label
+          for="student_or_teacher"
+          class="block text-gray-700 font-bold mb-2"
+          >Select Role:</label
+        >
+        <select
+          id="section_or_teacher"
+          value="student"
+          name="section_or_teacher"
+          class="block w-full px-4 py-3 bg-gray-200 rounded-lg focus:outline-none focus:bg-white"
+        >
+          <option value="section">Add Section</option>
+          <option value="teacher">Add Teacher</option>
+        </select>
+      </div>
+      <div id="studentdetails" class="mb-4">
+        <input
+          id="from_roll_no"
+          name="from_roll_no"
+          type="number"
+          .
+          placeholder="Enter starting Roll Number"
+          class="block w-full px-4 py-3 bg-gray-200 rounded-lg focus:outline-none focus:bg-white mb-2"
+        />
+        <input
+          id="to_roll_no"
+          name="to_roll_no"
+          type="number"
+          placeholder="Enter ending Roll Number"
+          class="block w-full px-4 py-3 bg-gray-200 rounded-lg focus:outline-none focus:bg-white mb-2"
+        />
+        <select
+          id="section"
+          value="A"
+          name="section"
+          class="block w-full px-4 py-3 bg-gray-200 rounded-lg focus:outline-none focus:bg-white"
+        >
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+        </select>
+      </div>
+      <div id="teacherdetails" class="mb-4 hidden">
+        <input
+          id="teacher_name"
+          name="teacher_name"
+          type="text"
+          placeholder="Enter Name of Teacher"
+          class="block w-full px-4 py-3 bg-gray-200 rounded-lg focus:outline-none focus:bg-white mb-2"
+        />
+        <select
+          id="teacher_subject"
+          value="ML"
+          name="teacher_subject"
+          class="block w-full px-4 py-3 my-4 bg-gray-200 rounded-lg focus:outline-none focus:bg-white"
+        >
+          <option value="ml">ML</option>
+          <option value="oose">OOSE</option>
+          <option value="nndl">NNDL</option>
+          <option value="cns">CNS</option>
+          <option value="ire">IRE</option>
+          <option value="wt">WT</option>
+        </select>
+        <select
+          id="teacher_section"
+          value="A"
+          name="teacher_section"
+          class="block w-full px-4 py-3 bg-gray-200 rounded-lg focus:outline-none focus:bg-white"
+        >
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+        </select>
+      </div>
+      <button
+        type="submit"
+        class="w-full bg-blue-500 text-white py-3 rounded-lg"
+      >
+        Submit
+      </button>
+    </form>
+    <script>
+      document
+        .getElementById("section_or_teacher")
+        .addEventListener("change", function (e) {
+          if (e.target.value == "section") {
+            document.getElementById("teacherdetails").style.display = "none";
+            document.getElementById("studentdetails").style.display = "block";
+          } else {
+            document.getElementById("studentdetails").style.display = "none";
+            document.getElementById("teacherdetails").style.display = "block";
+          }
+        });
+
+      document.querySelectorAll("input").forEach((input) => {
+        input.addEventListener("focus", function () {
+          input.classList.add("bg-focus");
+        });
+        input.addEventListener("blur", function () {
+          input.classList.remove("bg-focus");
+        });
+      });
+      document
+        .getElementById("updationform")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          if (
+            document.getElementById("section_or_teacher").value == "section"
+          ) {
+            const data = await fetch("/admin/addstudents", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                startroll: document.getElementById("from_roll_no").value,
+                endroll: document.getElementById("to_roll_no").value,
+                section: document.getElementById("section").value,
+              }),
+            });
+            const result = await data.json();
+            window.alert(result);
+          } else {
+            const data = await fetch("/admin/addteacher", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                name: document.getElementById("teacher_name").value,
+                subject: document.getElementById("teacher_subject").value,
+                section: document.getElementById("teacher_section").value,
+              }),
+            });
+            const result = await data.json();
+            window.alert(result);
+          }
+        });
+    </script>
+  </body>
+</html>

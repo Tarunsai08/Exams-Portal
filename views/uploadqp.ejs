@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher</title>
+    <meta name="author" content="Tarun Sai" />
+    <meta name="description" content="" />
+
+    <!-- Tailwind -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css?family=Karla:400,700&display=swap");
+      .font-family-karla {
+        font-family: karla;
+      }
+      .bg-sidebar {
+        background: #3d68ff;
+      }
+      .cta-btn {
+        color: #3d68ff;
+      }
+      .upgrade-btn {
+        background: #1947ee;
+      }
+      .upgrade-btn:hover {
+        background: #0038fd;
+      }
+      .active-nav-link {
+        background: #1947ee;
+      }
+      .nav-item:hover {
+        background: #1947ee;
+      }
+      .account-link:hover {
+        background: #3d68ff;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-200 font-family-karla flex">
+    <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
+      <div class="p-6">
+        <a
+          href="/teacher"
+          class="text-white text-3xl font-semibold uppercase hover:text-gray-300"
+          >Teacher</a
+        >
+        
+      </div>
+      <nav class="text-white text-base font-semibold pt-3">
+        <a
+          href="/teacher"
+          class="flex items-center opacity-75 hover:opacity-100 text-white py-4 pl-6 nav-item"
+        >
+          <i class="fas fa-tachometer-alt mr-3"></i>
+          Dashboard
+        </a>
+        <a
+          href="/updatemarks"
+          class="flex items-center opacity-75 text-white  hover:opacity-100 py-4 pl-6 nav-item"
+        >
+          <i class="fas fa-sticky-note mr-3"></i>
+          Update Marks
+        </a>
+        <a
+          href="/uploadqp"
+          class="flex items-center active-nav-link text-white py-4 pl-6 nav-item"
+        >
+        <i class="fas fa-align-left mr-3"></i>
+          Upload Question paper
+        </a>
+      </nav>
+    </aside>
+
+    <div class="w-full flex flex-col h-screen overflow-y-hidden">
+      <!-- Desktop Header -->
+      <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
+        <div class="w-1/2"><h1 class="text-xl font-bold text-gray-700">Exam Portal</h1></div>
+        <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
+          <button
+            @click="isOpen = !isOpen"
+            class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-blue-400 hover:border-blue-300 focus:border-gray-300 focus:outline-none"
+          >
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQavfQMBYKkiT6iVeBYUBIQVdbdDaRMhM_EhRvBFubN9w&s" />
+          </button>
+          <button
+            x-show="isOpen"
+            @click="isOpen = false"
+            class="h-full w-full fixed inset-0 cursor-default"
+          ></button>
+          <div
+            x-show="isOpen"
+            class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16"
+          >
+            <a href="/teacher" class="block px-4 py-2 account-link hover:text-white"
+              >Home</a
+            >
+            <a href="/logout" class="block px-4 py-2 account-link hover:text-white"
+              >Sign Out</a
+            >
+          </div>
+        </div>
+      </header>
+
+
+      <div id="content" class="w-full overflow-x-hidden border-t flex flex-col">
+        <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
+            <main class="w-full flex-grow p-6">
+                <h1 class="w-full text-3xl text-black pb-6">Upload Form</h1>
+              
+                <div class="flex flex-wrap">
+                  <div class="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
+                    <p class="text-xl pb-6 flex items-center">
+                      <i class="fas fa-file-upload mr-3"></i> Upload question paper
+                    </p>
+                    <div class="leading-loose">
+                      <form class="p-10 center bg-white rounded shadow-xl" method="post" action="/uploadqp" enctype="multipart/form-data">
+                        <div class="">
+                          <label class="block text-sm text-gray-600" for="file">File
+                          <div class="w-full h-32 border rounded px-3 py-2 flex items-center justify-center text-gray-500 cursor-pointer hover:bg-gray-100" id="file-dropzone">
+                            <% if(status == "uploaded") { %>
+                                <i class="fas fa-file-upload mr-2"></i> Already uploaded the question paper
+                                <input type="file" id="file" name="file" hidden disabled>
+                            <% } else { %>
+                                <i class="fas fa-file-upload mr-2"></i> Drag & Drop or Browse Files
+                                <input type="file" id="file" name="file" hidden>
+                            <% }%>
+                          </div>
+                        </label>
+                        </div>
+                        <div class="mt-6">
+                            <% if(status == "uploaded") { %>
+                              <button class="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded hidden" type="submit">Submit</button>
+                            <% } else { %>
+                              <button class="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded " type="submit">Submit</button>
+                            <% }%>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </main>
+              
+        </div>
+      </div>
+    </div>
+
+    <!-- AlpineJS -->
+    <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+      defer
+    ></script>
+    <!-- Font Awesome -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
+      integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs="
+      crossorigin="anonymous"
+    ></script>
+    
+  </body>
+</html>
+

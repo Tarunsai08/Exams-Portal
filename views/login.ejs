@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: '#da373d',
+            }
+          }
+        }
+      }
+    </script>
+  
+    <title>Document</title>
+</head>
+<body>
+  <div class="relative">
+    <img class="w-full h-full" src="https://images.unsplash.com/photo-1538947151057-dfe933d688d1?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+    <div class="flex justify-center  absolute top-36 left-[39%] border border-black rounded-xl w-96 h-[45%] shadow-2xl pl-12 border-opacity-35" >
+      <form method="post" action="/login">
+        <h1 class="text-center text-3xl text-black font-semibold font-sansp-2 mr-14 mt-6">Login</h1>
+        <input name="email" value=""class="px-4 py-3 mt-5 shadow-2xl rounded-full w-72" type="text" placeholder="Email Id" required>
+        <input name="password" value=""class="px-4 py-3 mt-6 shadow-2xl rounded-full w-72" type="password" placeholder="Password" required>
+        <select id="candidate" name="candidate" value="student" class="w-72 px-4 py-3 mt-3 shadow-lg rounded-full">
+          <option value="admin">Admin</option>
+          <option value="hod">HOD</option>
+          <option value="middleman">Middleman</option>
+          <option value="teacher">Teacher</option>
+          <option value="student">Student</option>
+        </select>
+        <button type="submit" class="w-72 bg-blue-300 text-black px-2 py-3 mt-8 mb-4 font-semibold rounded-full shadow-lg">Submit</button>
+        <span class="text-center font-semibold px-2 py-4 text-pretty text-xl">
+          Don't have an account?<a href="/register">Register</a>
+        </span>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>
